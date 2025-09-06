@@ -1,0 +1,10 @@
+{
+    "name": "live-refresh",
+    "author": "M2K mobile Solutions",
+    "main": "index.js",
+    "version": "1.0.0",
+    "type": "module",
+    "scripts": {
+        "start": "node --watch ./server_Aula_23.js"
+    }
+}
