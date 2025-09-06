@@ -4,8 +4,53 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const server = http.createServer((request, response) => {
-    
 
+    const filePath = '.' + request.url;
     
+    if (filePath === './') {
+        response.writeHead(400, {'Content-Type': 'text/html'});
+        response.end('<h1> Insira o nome do arquivo na url</h1>');
+        return;
+    };
+
+const filePathExtendened = path.extname(filePath).toLowerCase();
+
+const mimeTypes = {
+    '.html': 'text/html',       
+    '.js': 'text/javascript',
+    '.css': 'text/css',
+    '.json': 'application/json',
+    '.png': 'image/png',
+    '.jpg': 'image/jpg',
+    '.gif': 'image/gif',
+    '.svg': 'image/svg+xml',
+    '.wav': 'audio/wav',
+    '.mp4': 'video/mp4',
+    '.woff': 'application/font-woff',
+    '.ttf': 'application/font-ttf',
+    '.otf': 'application/font-otf'
+};
+
+const contentType = mimeTypes[filePathExtendened] || 'application/octet-stream';
+
+    fs.readFile(filePath, (error, content) => {
+        if (error) {
+            const statusCode = error.code === 'ENOENT' ? 404 : 500;
+            const message = error.code === 'ENOENT' 
+            ? '<h1> 404 Not Found</h1>' 
+            : '<h1> 500 Internal Server Error</h1>';
+            
+            response.writeHead(statusCode, {'Content-Type': contentType});
+            response.end(message);
+            return;
+        }
+
+        response.writeHead(200, {'Content-Type': contentType});
+        response.end(content);
+    });
+
 });
-    
+
+server.listen(3000, 'localhost', () => {
+    console.log('Servidor rodando em http://localhost:3000');
+});
