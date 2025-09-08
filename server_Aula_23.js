@@ -37,10 +37,10 @@ const contentType = mimeTypes[filePathExtendened] || 'application/octet-stream';
         if (error) {
             const statusCode = error.code === 'ENOENT' ? 404 : 500;
             const message = error.code === 'ENOENT' 
-            ? '<h1> 404 Not Found</h1>' 
-            : '<h1> 500 Internal Server Error</h1>';
-            
-            response.writeHead(statusCode, {'Content-Type': contentType});
+            ? '<h1> 404 Not Found </h1>' 
+            : '<h1> 500 Internal Server Error </h1>';
+
+            response.writeHead(statusCode, {'Content-Type': `text/html`});
             response.end(message);
             return;
         }
@@ -51,6 +51,9 @@ const contentType = mimeTypes[filePathExtendened] || 'application/octet-stream';
 
 });
 
-server.listen(3000, 'localhost', () => {
-    console.log('Servidor rodando em http://localhost:3000');
+const HOST = 'localhost';
+const PORT = 3000;
+
+server.listen(PORT, HOST, () => {
+  console.log(`Server running at http://${HOST}:${PORT}.`);
 });

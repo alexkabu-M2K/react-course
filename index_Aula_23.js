@@ -1,6 +1,6 @@
 const container = document.querySelector('#container');
 
-        const element = (() => {
+        const element = () => {
             return (
                     <div>
 
@@ -11,6 +11,6 @@ const container = document.querySelector('#container');
 
             )
             
-        });
+        };
 
         ReactDOM.createRoot(container).render(element());
